@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import os
 app = Flask(__name__)
 
 
@@ -45,7 +46,7 @@ def parse_text_to_html(text, data):
                 if cur_text_line[:10] == "  - ЦВЕТ: ":
                     color = cur_text_line.replace("  - ЦВЕТ: ", "")
                     if color in cd:
-                        color = cd["color"]
+                        color = cd[color]
                     table[cur_row][2] = color
 
                 else:
@@ -82,4 +83,5 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
