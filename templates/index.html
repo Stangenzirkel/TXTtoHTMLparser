@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<script type="text/javascript">
+    function selectElementContents(el) {
+        var body = document.body, range, sel;
+        if (document.createRange && window.getSelection) {
+            range = document.createRange();
+            sel = window.getSelection();
+            sel.removeAllRanges();
+            try {
+                range.selectNodeContents(el);
+                sel.addRange(range);
+            } catch (e) {
+                range.selectNode(el);
+                sel.addRange(range);
+            }
+        } else if (body.createTextRange) {
+            range = body.createTextRange();
+            range.moveToElementText(el);
+            range.select();
+        }
+        document.execCommand("Copy");
+    }
+
+</script>
+   <head>
+       <meta charset="UTF-8">
+      <style>
+         table, th, td {
+            border: 1px solid black;
+            width: 100px;
+            height: 50px;
+         }
+
+         td {
+            min-width: 40px
+         }
+      </style>
+   </head>
+
+   <body>
+   <form method = "get">
+       <label>Номер заказа:</label>
+       <br>
+       <input type="text" name="num" size="12"/>
+       <br>
+       <label>Заказ:</label>
+       <br>
+       <textarea rows = "20" cols = "60" size="12" name = "description">  </textarea>
+       <br>
+       <input type = "submit" value = "Спарсить" style="background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;"/>
+   </form>
+   <br>
+   {{ data|safe }}
+   <br>
+   <input type="button" value="Скопировать"
+    onclick="selectElementContents( document.getElementById('table') );" style="background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;"/>
+   </body>
+</html>
