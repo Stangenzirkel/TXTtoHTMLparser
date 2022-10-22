@@ -9,7 +9,7 @@ def get_color_dict(file):
 
     cd = dict()
     for line in lines:
-        key, values = tuple(line.split())
+        key, values = tuple(line.split(": "))
         cd[key] = values
 
     return cd
