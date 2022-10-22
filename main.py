@@ -76,9 +76,14 @@ def parse_text_to_html(text, data):
         return "<table id=\"table\"><tr><td>" + "Ошибка\n" + str(e) + "</tr></td></table>"
 
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def index():
-    my_data = parse_text_to_html(request.args.get('description'), {'num': request.args.get('num')})
+    if request.method == 'GET':
+        my_data = parse_text_to_html(request.args.get('description'), {'num': request.args.get('num')})
+
+    else:
+        my_data = parse_text_to_html(request.form['description'], {'num': request.form['num']})
+
     return render_template("index.html", data=my_data)
 
 
