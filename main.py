@@ -34,6 +34,13 @@ def parse_text_to_html(text, data):
             if cur_text_line[:4] != "  - ":
                 cur_row += 1
                 table.append(["", "", "", ""])
+
+                if cur_text_line.count("\t") == 4:
+                    cur_text_line = cur_text_line.split("\t")
+                    table[cur_row][1] = cur_text_line[1]
+                    table[cur_row][3] = cur_text_line[2]
+                    cur_text_line = cur_text_line[0]
+
                 table[cur_row][0] = cur_text_line
 
             else:
