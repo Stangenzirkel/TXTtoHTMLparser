@@ -55,10 +55,10 @@ def parse_text_to_html(text, data):
         html_table = "<table id=\"table\">"
         for i, line in enumerate(table):
             html_table += "<tr>"
-            if i == 0:
-                html_table += f"<td rowspan={cur_text_line_num}>{data['num'] if 'num' in data else ''}</td>"
-                html_table += f"<td rowspan={cur_text_line_num}>{data['date'] if 'date' in data else ''}</td>"
-                html_table += f"<td rowspan={cur_text_line_num}>{data['sth'] if 'sth' in data else ''}</td>"
+            html_table += f"<td>{data['num'] if 'num' in data and i == 0 else ''}</td>"
+            html_table += f"<td>{data['date'] if 'date' in data and i == 0 else ''}</td>"
+            html_table += f"<td>{data['sth'] if 'sth' in data and i == 0 else ''}</td>"
+
             html_table += f"<td>{line[0]}</td>"
             html_table += f"<td>{line[1]}</td>"
             html_table += f"<td>{line[2]}</td>"
