@@ -34,31 +34,21 @@ def parse_text_to_html(text, data):
             if cur_text_line[:4] != "  - ":
                 cur_row += 1
                 table.append(["", "", "", ""])
-
                 if cur_text_line.count("\t") == 4:
                     cur_text_line = cur_text_line.split("\t")
                     table[cur_row][1] = cur_text_line[1]
                     table[cur_row][3] = cur_text_line[2]
                     cur_text_line = cur_text_line[0]
 
+            if cur_text_line[:4] != "  - ":
                 table[cur_row][0] = cur_text_line
-
-            else:
-                if cur_text_line.count("\t") == 4:
-                    cur_text_line = cur_text_line.split("\t")
-                    table[cur_row][1] = cur_text_line[1]
-                    table[cur_row][3] = cur_text_line[2]
-                    cur_text_line = cur_text_line[0]
-
-                if cur_text_line[:10] == "  - ЦВЕТ: ":
+            elif cur_text_line[:10] == "  - ЦВЕТ: ":
                     color = cur_text_line.replace("  - ЦВЕТ: ", "")
                     if color in cd:
                         color = cd[color]
                     table[cur_row][2] = color
-
-                else:
-                    table[cur_row][0] = table[cur_row][0] + " " + cur_text_line.replace("  - ", "")
-
+            else:
+                table[cur_row][0] = table[cur_row][0] + " " + cur_text_line.replace("  - ", "")
             cur_text_line_num += 1
 
         html_table = "<table id=\"table\">"
@@ -68,13 +58,11 @@ def parse_text_to_html(text, data):
                 html_table += f"<td rowspan={cur_text_line_num}>{data['num'] if 'num' in data else ''}</td>"
                 html_table += f"<td rowspan={cur_text_line_num}>{data['date'] if 'date' in data else ''}</td>"
                 html_table += f"<td rowspan={cur_text_line_num}>{data['sth'] if 'sth' in data else ''}</td>"
-
             html_table += f"<td>{line[0]}</td>"
             html_table += f"<td>{line[1]}</td>"
             html_table += f"<td>{line[2]}</td>"
             html_table += f"<td>{line[3]}</td>"
             html_table += "</tr>"
-
         html_table += "</table>"
 
         return html_table
